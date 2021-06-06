@@ -1,7 +1,7 @@
 # Weather Station
 
 ### Overview
-The original challenge is located inside `src.station_functions.py`. In there are located the three functions corresponding to the three parts of the challenge. The test cases for which are located in `test.test_station_functions.py`.
+The original challenge is located inside `src.station_functions.py`. In there are located the three functions corresponding to the three parts of the challenge. The test cases for which are located in `test.test_station_functions.py`. `Data.csv` could not be added to the github repo and was thus ignored, if you would like to run the functions with that data set, please download it seperately and add it to the file location `data/data.csv` so that it may be acquired in the functions correctly. As I am at the two hour mark, I could put in a reader to unzip the data file before it does the read so that the `data.csv` file could be included in the repo, but that would take additional time and I wanted to be fair with the work that I have done.
 
 Additionally I am adding an api based around these functions in ordre to showcase my api abilities since the challenge was unrelated to such and that is where my abilities were questioned. You can find these in `src.api`. Here there will be a flask api laid out for showcasing any interactions with the previous challenged functions.
 
