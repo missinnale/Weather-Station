@@ -1,7 +1,10 @@
 import pandas as pd
+import zipfile
 
 def get_data():
-    data = pd.read_csv("../data/data.csv")
+    with zipfile.ZipFile("./data/data.csv.zip", 'r') as zip_ref:
+        zip_ref.extractall("./data")
+    data = pd.read_csv("./data/data.csv")
     return data
 
 def get_fluctuation(data):
@@ -29,7 +32,7 @@ def get_station_with_most_fluctuation():
 
 def get_station_fluctuation_for_date(date_1, date_2):
     response = get_data()
-    data = response[(response["date"] >= date_1) & (response["date"] <= date_2)].reset_index()
+    data = response[(response["date"] >= float(date_1)) & (response["date"] <= float(date_2))].reset_index()
     stations = get_fluctuation(data)
     max_station = max(stations, key= stations.get)
     return max_station
