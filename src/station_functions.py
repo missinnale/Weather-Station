@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import zipfile
 
 def get_data():
@@ -8,16 +9,8 @@ def get_data():
     return data
 
 def get_fluctuation(data):
-    stations = {}
-    for i, val in enumerate(data["temperature_c"][1:], 1):
-        if data["station_id"][i-1] == data["station_id"][i]:
-            if data["station_id"][i] in stations:
-                stations[data["station_id"][i]] += abs(data["temperature_c"][i-1] - val)
-            else:
-                stations[data["station_id"][i]] = abs(data["temperature_c"][i-1] - val)
-            continue
-        continue
-    return stations
+    stations = data.groupby("station_id")["temperature_c"].apply(np.diff).apply(np.abs).apply(np.sum)
+    return stations.idxmax()
 
 def get_station_with_lowest_temp():
     data = get_data()
@@ -26,13 +19,9 @@ def get_station_with_lowest_temp():
 
 def get_station_with_most_fluctuation():
     data = get_data()
-    stations = get_fluctuation(data)
-    max_station = max(stations, key= stations.get)
-    return max_station
+    return get_fluctuation(data)
 
 def get_station_fluctuation_for_date(date_1, date_2):
     response = get_data()
     data = response[(response["date"] >= float(date_1)) & (response["date"] <= float(date_2))].reset_index()
-    stations = get_fluctuation(data)
-    max_station = max(stations, key= stations.get)
-    return max_station
+    return get_fluctuation(data)
